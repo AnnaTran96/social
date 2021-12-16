@@ -23,7 +23,4 @@ const postSchema = new Schema({
     }
 })
 
-// ref: table/collection - users
-// later it will use mongoose to populate the users fields
-
 module.exports = model('Post', postSchema);
