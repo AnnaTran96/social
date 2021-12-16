@@ -1,19 +1,19 @@
 module.exports.valdidateRegisterInput = (username, email, password, confirmedPassword) => {
     const errors = {};
-    if(username.trim() === ''){
+    if (username.trim() === '') {
         errors.username = 'Username must not be empty'
     }
-    if(email.trim() === ''){
+    if (email.trim() === '') {
         errors.email = 'Email must not be empty'
     } else {
         const regEx = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
-        if(!email.match(regEx)){
+        if (!email.match(regEx)) {
             errors.email = 'Email must be a valid email address'
         }
     }
-    if(password === ''){
+    if (password === '') {
         errors.password = 'Password must not be empty'
-    } else if(password !== confirmedPassword) {
+    } else if (password !== confirmedPassword) {
         errors.confirmedPassword = 'Passwords must match'
     }
 
@@ -23,14 +23,12 @@ module.exports.valdidateRegisterInput = (username, email, password, confirmedPas
     }
 }
 
-// if the valid is true, then there is no errors so it returns the keys of the object
-
 module.exports.validateLoginInput = (username, password) => {
     const errors = {};
-    if(username.trim() === ''){
+    if (username.trim() === '') {
         errors.username = 'Username must not be empty'
     }
-    if(password.trim() === ''){
+    if (password.trim() === '') {
         errors.password = 'Password must not be empty'
     }
     return {

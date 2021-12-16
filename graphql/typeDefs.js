@@ -52,8 +52,3 @@ module.exports = gql`
         newPost: Post!
     }
 `
-// by adding ! at the end of the datatype, it means it is required
-
-// getPosts: [Post] - it gets it from type Post in typeDefs
-// type Mutation - means making a change to our DB
-// type Query - get query

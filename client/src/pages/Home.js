@@ -1,21 +1,14 @@
-import React, { useContext } from 'react';
 import { useQuery } from '@apollo/client';
+import React, { useContext } from 'react';
 import { Grid, Transition } from 'semantic-ui-react';
-import { AuthContext } from '../context/auth';
-import { FETCH_POSTS_QUERY } from '../util/graphql';
 import PostCard from '../components/PostCard';
 import PostForm from '../components/PostForm';
+import { AuthContext } from '../context/auth';
+import { FETCH_POSTS_QUERY } from '../util/graphql';
 
 function Home() {
-
-    // getPosts: posts
-    // getPosts is from the object we see in the console (which is the data)
-    // : posts is just an alias so basically getPosts as posts
     const { user } = useContext(AuthContext);
     const { loading, data: { getPosts: posts } = {} } = useQuery(FETCH_POSTS_QUERY)
-    // if(data){
-    //     console.log(data)
-    // }
 
     return (
         <Grid columns={3}>
@@ -25,7 +18,7 @@ function Home() {
             <Grid.Row>
                 {user && (
                     <Grid.Column>
-                        <PostForm/>
+                        <PostForm />
                     </Grid.Column>
                 )}
                 {loading ? (
@@ -33,10 +26,10 @@ function Home() {
                 ) : (
                     <Transition.Group>
                         {posts && posts.map(post => (
-                        <Grid.Column key={post.id} style={{marginBottom: 20}}>
-                            <PostCard post={post}/>
-                        </Grid.Column>
-                    ))}
+                            <Grid.Column key={post.id} style={{ marginBottom: 20 }}>
+                                <PostCard post={post} />
+                            </Grid.Column>
+                        ))}
                     </Transition.Group>
                 )}
             </Grid.Row>

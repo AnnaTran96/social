@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react'
-import { Form, Button } from 'semantic-ui-react'
 import { useMutation } from '@apollo/client';
-import { useForm } from '../util/hooks';
-import { AuthContext } from '../context/auth';
 import gql from 'graphql-tag';
+import React, { useContext, useState } from 'react';
+import { Button, Form } from 'semantic-ui-react';
+import { AuthContext } from '../context/auth';
+import { useForm } from '../util/hooks';
 
 function Register(props) {
 
@@ -17,15 +17,13 @@ function Register(props) {
         confirmedPassword: ''
     })
 
-    // spread existing values or it will override it
-
     const [addUser, { loading }] = useMutation(REGISTER_USER, {
-        update(_, { data: { register: userData }}){
+        update(_, { data: { register: userData } }) {
             console.log(userData)
             context.login(userData)
             props.history.push('/')
         },
-        onError(err){
+        onError(err) {
             console.log(err)
             setErrors(err.graphQLErrors[0].extensions.exception.errors)
 
@@ -33,16 +31,16 @@ function Register(props) {
         variables: values
     })
 
-    function registerUser(){
-         addUser();
+    function registerUser() {
+        addUser();
     }
 
     return (
         <div className="form-container">
             <Form onSubmit={onSubmit} noValidate className={loading ? "loading" : ''}>
                 <h1>Register</h1>
-                <Form.Input 
-                    label="Username" 
+                <Form.Input
+                    label="Username"
                     placeholder="Username"
                     name="username"
                     value={values.username}
@@ -50,8 +48,8 @@ function Register(props) {
                     type="text"
                     onChange={onChange}
                 />
-                <Form.Input 
-                    label="Email" 
+                <Form.Input
+                    label="Email"
                     placeholder="Email"
                     name="email"
                     value={values.email}
@@ -59,8 +57,8 @@ function Register(props) {
                     type="email"
                     onChange={onChange}
                 />
-                <Form.Input 
-                    label="Password" 
+                <Form.Input
+                    label="Password"
                     placeholder="Password"
                     name="password"
                     value={values.password}
@@ -68,8 +66,8 @@ function Register(props) {
                     type="password"
                     onChange={onChange}
                 />
-                <Form.Input 
-                    label="Confirm Password" 
+                <Form.Input
+                    label="Confirm Password"
                     placeholder="Confirm Password"
                     name="confirmedPassword"
                     value={values.confirmedPassword}
@@ -82,13 +80,13 @@ function Register(props) {
                 </Button>
             </Form>
             {Object.keys(errors).length > 0 && (
-                  <div className="ui error message">
-                  <ul className="list">
-                      {Object.values(errors).map(value => (
-                          <li key={value}>{value}</li>
-                      ))}
-                  </ul>
-              </div>
+                <div className="ui error message">
+                    <ul className="list">
+                        {Object.values(errors).map(value => (
+                            <li key={value}>{value}</li>
+                        ))}
+                    </ul>
+                </div>
             )}
         </div>
     )

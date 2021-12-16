@@ -1,35 +1,35 @@
-import React, { useReducer, createContext } from 'react';
 import jwtDecode from 'jwt-decode';
+import React, { createContext, useReducer } from 'react';
 
 const initialState = {
     user: null
 }
 
-if(localStorage.getItem('jwtToken')) {
+if (localStorage.getItem('jwtToken')) {
     const decodedToken = jwtDecode(localStorage.getItem('jwtToken'))
 
-    if(decodedToken.exp * 1000 < Date.now()) { // if this is true, the token is expired
-        localStorage.removeItem('jwtToken') // remove the token as it is expired
-    } else { // we want to set the decoded token data to the user as it is not expired and valid
+    if (decodedToken.exp * 1000 < Date.now()) {
+        localStorage.removeItem('jwtToken')
+    } else {
         initialState.user = decodedToken;
     }
 }
 
 const AuthContext = createContext({
     user: null,
-    login: (userData) => {},
-    logout: () => {}
+    login: (userData) => { },
+    logout: () => { }
 })
 
-function authReducer(state, action){
-    switch(action.type){
+function authReducer(state, action) {
+    switch (action.type) {
         case 'LOGIN':
-            return{
+            return {
                 ...state,
                 user: action.payload
             }
         case 'LOGOUT':
-            return{
+            return {
                 ...state,
                 user: null
             }
@@ -38,10 +38,10 @@ function authReducer(state, action){
     }
 }
 
-function AuthProvider(props){
+function AuthProvider(props) {
     const [state, dispatch] = useReducer(authReducer, initialState)
 
-    function login(userData){
+    function login(userData) {
         localStorage.setItem("jwtToken", userData.token)
         dispatch({
             type: 'LOGIN',
@@ -49,16 +49,16 @@ function AuthProvider(props){
         })
     }
 
-    function logout(){
+    function logout() {
         localStorage.removeItem("jwtToken")
-        dispatch({ type: 'LOGOUT'})
+        dispatch({ type: 'LOGOUT' })
     }
 
-    return(
+    return (
         <AuthContext.Provider
-        value={{ user: state.user, login, logout }}
-        {...props}/>
+            value={{ user: state.user, login, logout }}
+            {...props} />
     )
 }
 
-export { AuthContext, AuthProvider }
+export { AuthContext, AuthProvider };
